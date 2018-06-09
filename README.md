@@ -1,1 +1,1 @@
-# CourseManagement
+# Learning Management System
