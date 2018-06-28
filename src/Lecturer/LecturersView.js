@@ -1,21 +1,45 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import {Button, Layout} from 'antd';
 import LecturerCard from './LecturerCard';
-import imgLec1 from '../images/lecturer-a.jpg';
-import imgLec2 from '../images/lecturer-b.jpg';
+import {fetchLecturers} from '../api/lecturer';
 
-export default class LecturerView extends React.Component{
+export default class LecturersView extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            isLoading: false,
+            lecturers: []
+        }
+    }
+
+    componentDidMount(){
+        fetchLecturers()
+            .then(response =>{
+                this.setState({lecturers:response.data});
+            })
+            .catch(e =>{
+                alert(e);
+            })
+    }
+
     render(){
         return(
-            <div>
-                <LecturerCard
-                title="Lecturer 1"
-                desc="desc 1"
-                avatar={imgLec1} />
-                <LecturerCard
-                title="Lecturer 2"
-                desc="desc 2"
-                avatar={imgLec2} />
-            </div>
+            <Layout>
+                <Layout.Content>
+                <div>
+                    {this.state.lecturers.map(lecturer=>
+                    <LecturerCard
+                    key = {lecturer.Id}
+                    id = {lecturer.Id}
+                    title = {lecturer.Name}
+                    desc = {lecturer.LecturerDetail.detail} />)}
+                    <Link to="lecturers/edit/NEW">
+                        <Button type="primary">Add Lecturer</Button>
+                    </Link>
+                </div>
+                </Layout.Content>
+            </Layout>
         );
     }
 }
