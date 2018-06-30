@@ -1,19 +1,18 @@
 import React from 'react';
-import {Card,Icon,Avatar} from 'antd';
-const {Meta} = Card;
+import {Link} from 'react-router-dom';
+import {Card,Icon} from 'antd';
 
 
 export default class CourseCard extends React.Component{
-    constructor(){
-        super();
-    }
     render(){
         return(
-            <div style={{paddingLeft:"10px",paddingBottom:"15px",width:"350px"}}>
+            <div style={{padding:"20px 20px 20px 40px",width:"350px"}}>
                 <Card
                 cover={<img alt="course" src={this.props.img} style={{height:"270px"}}/>}
-                actions={[<Icon type="edit" />, <Icon type="ellipsis" />]}>
-                    <Meta
+                actions={[
+                    <Link to={`/courses/${this.props.id}`}><span><Icon type="profile"/> Details</span></Link>, 
+                    <Link to={`/courses/edit/${this.props.id}`}><span><Icon type="edit"/> Edit</span></Link>]}>
+                    <Card.Meta
                     title={this.props.title}
                     description={this.props.desc}/>
                 </Card>

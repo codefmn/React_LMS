@@ -1,56 +1,49 @@
 import React from 'react';
-import {Row, Col} from 'antd';
-import imgReact from '../images/course-react.svg';
-import imgAngular from '../images/course-angular.svg';
-import imgVue from '../images/course-vue.png';
-import imgCsharp from '../images/course-csharp.jpg';
-import imgNodejs from '../images/course-nodejs.png';
-import imgPython from '../images/course-python.png';
+import {Link} from 'react-router-dom';
+import {Layout, Row, Col, Button} from 'antd';
+import {fetchCourses} from '../api/course';
 import CourseCard from './CourseCard';
+import imgReact from '../images/course-react.svg';
 
 export default class CourseView extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            isLoading: false,
+            courses: []
+        }
+    }
+
+    componentDidMount(){
+        fetchCourses()
+            .then(response =>{
+                this.setState({courses:response.data});
+            })
+            .catch(e =>{
+                alert(e);
+            })
+    }
+
     render(){
         return(
-            <div>
-                <Row>
-                    <Col sm={24} md={12} lg={8}>
-                        <CourseCard 
-                        title={"React"}
-                        desc={"React Course Details"}
-                        img={imgReact}/>
-                    </Col>
-                    <Col sm={24} md={12} lg={8}>
-                        <CourseCard
-                        title={"Angular"}
-                        desc={"Angular Course Details"}
-                        img={imgAngular}/>
-                    </Col>
-                    <Col sm={24} md={12} lg={8}>
-                        <CourseCard
-                        title={"Vue"}
-                        desc={"Vue Course Details"}
-                        img={imgVue}/>
-                    </Col>
-                    <Col sm={24} md={12} lg={8}>
-                        <CourseCard
-                        title={"C#"}
-                        desc={"C# Course Details"}
-                        img={imgCsharp}/>
-                    </Col>
-                    <Col sm={24} md={12} lg={8}>
-                        <CourseCard
-                        title={"Node.js"}
-                        desc={"Node.js Course Details"}
-                        img={imgNodejs}/>
-                    </Col>
-                    <Col sm={24} md={12} lg={8}>
-                        <CourseCard
-                        title={"Python"}
-                        desc={"Python Course Details"}
-                        img={imgPython}/>
-                    </Col>
-                </Row>
-            </div>
+            <Layout>
+                <Layout.Content>
+                    <Row>
+                        {this.state.courses.map(course=>
+                        <Col key={course.Id} sm={24} md={12} lg={8}>
+                            <CourseCard 
+                            key = {course.Id}
+                            id = {course.Id}
+                            title={course.Name}
+                            desc={course.CourseCode}
+                            img={imgReact}/>
+                        </Col>)}
+                    </Row>
+                    <Link to="courses/edit/NEW">
+                        <Button type="primary">Add Course</Button>
+                    </Link>
+                </Layout.Content>
+            </Layout>      
         );
     }
 }
