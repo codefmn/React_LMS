@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Layout, Card, Button} from 'antd';
+import {Layout, Card, Avatar, Button} from 'antd';
 import {fetchLecturerById} from '../api/lecturer';
 
 export default class LecturerDetailView extends React.Component{
@@ -12,13 +12,10 @@ export default class LecturerDetailView extends React.Component{
         }
     }
 
-
-
     componentWillMount(){
         fetchLecturerById(this.props.match.params.id)
             .then(response =>{
                 this.setState({lecturer:response.data});
-                console.log(this.state.lecturer);
             })
             .catch(e =>{
                 alert(e);
@@ -32,8 +29,8 @@ export default class LecturerDetailView extends React.Component{
                     <div style={{padding:"15px 35px"}}>
                         <Card>
                             <Card.Meta
-                            title = {this.state.lecturer.Name}
-                            description = {this.state.lecturer.Id} />
+                            avatar = {<Avatar size="large">{this.state.lecturer.Id}</Avatar>}
+                            title = {this.state.lecturer.Name} />
                         </Card>
                         <Link to="/lecturers"><Button type="primary">Return</Button></Link>
                     </div>

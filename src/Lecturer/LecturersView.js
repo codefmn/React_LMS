@@ -27,17 +27,14 @@ export default class LecturersView extends React.Component{
         return(
             <Layout>
                 <Layout.Content>
-                <div>
                     {this.state.lecturers.map(lecturer=>
                     <LecturerCard
                     key = {lecturer.Id}
                     id = {lecturer.Id}
-                    title = {lecturer.Name}
-                    desc = {lecturer.LecturerDetail.detail} />)}
+                    title = {lecturer.Name} />)}
                     <Link to="lecturers/edit/NEW">
                         <Button type="primary">Add Lecturer</Button>
                     </Link>
-                </div>
                 </Layout.Content>
             </Layout>
         );
