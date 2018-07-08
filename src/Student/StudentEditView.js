@@ -1,24 +1,24 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Layout, Form, Input, Button, notification} from 'antd';
-import {fetchLecturerById, saveLecturer, updateLecturer, deleteLecturerById} from '../api/lecturer';
+import {fetchStudentById, saveStudent, updateStudent, deleteStudentById} from '../api/student';
 
-export default class LecturerEditView extends React.Component{
+export default class StudentEditView extends React.Component{
     constructor(){
         super();
         this.state={
-            lecturer:{LecturerDetail:{}}
+            student:{}
         }
     }
 
     componentWillMount(){
         if('NEW'===this.props.match.params.id){
-            this.setState({lecturer:{}});
+            this.setState({student:{}});
         }else{
-            fetchLecturerById(this.props.match.params.id)
+            fetchStudentById(this.props.match.params.id)
                 .then(response =>{
                     console.log(response.data);
-                    this.setState({lecturer:response.data});
+                    this.setState({student:response.data});
                 })
                 .catch(e =>{
                     alert(e);
@@ -29,11 +29,11 @@ export default class LecturerEditView extends React.Component{
     handleSubmit(e){
         e.preventDefault();
         if('NEW'===this.props.match.params.id){
-            saveLecturer(this.state.lecturer)
+            saveStudent(this.state.student)
                 .then(
                     notification.success({
                         message: 'Sucess',
-                        description: 'Lecturer Added.',
+                        description: 'Student Added.',
                         duration: 0,
                         placement: 'topLeft',
                     })
@@ -42,35 +42,35 @@ export default class LecturerEditView extends React.Component{
                     alert(e);
                 })
         }else{
-            updateLecturer(this.props.match.params.id,this.state.lecturer)
+            updateStudent(this.props.match.params.id,this.state.student)
                 .then(
                     notification.success({
                         message: 'Sucess',
-                        description: 'Lecturer Updated.',
+                        description: 'Student Updated.',
                         duration: 0,
                         placement: 'topLeft',
                     })
                 )
                 .catch(e=>{
                     alert(e);
-                })     
+                })
         }
     }
 
     handleInputChange(e){
         const {name, value} = e.target;
-        const lecturer = {...this.state.lecturer};
-        lecturer[name] = value;
-        this.setState({ lecturer });
-        console.log(lecturer);
+        const student = {...this.state.student};
+        student[name] = value;
+        this.setState({ student });
+        console.log(student);
     }
 
     handleDelete(){
-        deleteLecturerById(this.props.match.params.id)
+        deleteStudentById(this.props.match.params.id)
             .then(
                 notification.success({
                     message: 'Sucess',
-                    description: 'Lecturer Deleted.',
+                    description: 'Student Deleted.',
                     duration: 0,
                     placement: 'topLeft',
                 })
@@ -79,21 +79,21 @@ export default class LecturerEditView extends React.Component{
                 alert(e);
             })
     }
-    
+
     render(){
-        const {lecturer} = this.state;
+        const {student} = this.state;
         return(
             <Layout>
                 <Layout.Content>
                     <Form style={{padding:"15px 35px"}}  onSubmit={this.handleSubmit.bind(this)}>
                         <Form.Item>
-                            <Input placeholder="Name" value={lecturer.Name} name='Name'
+                            <Input placeholder="Name" value={student.Name} name='Name'
                                 onChange={this.handleInputChange.bind(this)}/>
                         </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit"> Submit </Button>&nbsp;
                             <Button type="danger" onClick={this.handleDelete.bind(this)}> Delete </Button>&nbsp;
-                            <Link to="/lecturers"><Button type="default"> Return </Button></Link>
+                            <Link to="/students"><Button type="default"> Return </Button></Link>
                         </Form.Item>
                     </Form>
                 </Layout.Content>

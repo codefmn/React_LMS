@@ -1,24 +1,24 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Layout, Form, Input, Button, notification} from 'antd';
-import {fetchLecturerById, saveLecturer, updateLecturer, deleteLecturerById} from '../api/lecturer';
+import {fetchCourseById, saveCourse, updateCourse, deleteCourseById} from '../api/course';
 
-export default class LecturerEditView extends React.Component{
+export default class CourseEditView extends React.Component{
     constructor(){
         super();
         this.state={
-            lecturer:{LecturerDetail:{}}
+            course:{}
         }
     }
 
     componentWillMount(){
         if('NEW'===this.props.match.params.id){
-            this.setState({lecturer:{}});
+            this.setState({course:{}});
         }else{
-            fetchLecturerById(this.props.match.params.id)
+            fetchCourseById(this.props.match.params.id)
                 .then(response =>{
                     console.log(response.data);
-                    this.setState({lecturer:response.data});
+                    this.setState({course:response.data});
                 })
                 .catch(e =>{
                     alert(e);
@@ -29,11 +29,11 @@ export default class LecturerEditView extends React.Component{
     handleSubmit(e){
         e.preventDefault();
         if('NEW'===this.props.match.params.id){
-            saveLecturer(this.state.lecturer)
+            saveCourse(this.state.course)
                 .then(
                     notification.success({
                         message: 'Sucess',
-                        description: 'Lecturer Added.',
+                        description: 'Course Added.',
                         duration: 0,
                         placement: 'topLeft',
                     })
@@ -42,35 +42,35 @@ export default class LecturerEditView extends React.Component{
                     alert(e);
                 })
         }else{
-            updateLecturer(this.props.match.params.id,this.state.lecturer)
+            updateCourse(this.props.match.params.id,this.state.course)
                 .then(
                     notification.success({
                         message: 'Sucess',
-                        description: 'Lecturer Updated.',
+                        description: 'Course Updated.',
                         duration: 0,
                         placement: 'topLeft',
                     })
                 )
                 .catch(e=>{
                     alert(e);
-                })     
+                })
         }
     }
 
     handleInputChange(e){
         const {name, value} = e.target;
-        const lecturer = {...this.state.lecturer};
-        lecturer[name] = value;
-        this.setState({ lecturer });
-        console.log(lecturer);
+        const course = {...this.state.course};
+        course[name] = value;
+        this.setState({ course });
+        console.log(course);
     }
 
     handleDelete(){
-        deleteLecturerById(this.props.match.params.id)
+        deleteCourseById(this.props.match.params.id)
             .then(
                 notification.success({
                     message: 'Sucess',
-                    description: 'Lecturer Deleted.',
+                    description: 'Course Deleted.',
                     duration: 0,
                     placement: 'topLeft',
                 })
@@ -81,19 +81,27 @@ export default class LecturerEditView extends React.Component{
     }
     
     render(){
-        const {lecturer} = this.state;
+        const {course} = this.state;
         return(
             <Layout>
                 <Layout.Content>
                     <Form style={{padding:"15px 35px"}}  onSubmit={this.handleSubmit.bind(this)}>
                         <Form.Item>
-                            <Input placeholder="Name" value={lecturer.Name} name='Name'
+                            <Input placeholder="CourseCode" value={course.CourseCode} name='CourseCode'
+                                onChange={this.handleInputChange.bind(this)}/>
+                        </Form.Item>
+                        <Form.Item>
+                            <Input placeholder="Name" value={course.Name} name='Name'
+                                onChange={this.handleInputChange.bind(this)}/>
+                        </Form.Item>
+                        <Form.Item>
+                            <Input placeholder="Introduction" value={course.Introduction} name='Introduction'
                                 onChange={this.handleInputChange.bind(this)}/>
                         </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit"> Submit </Button>&nbsp;
                             <Button type="danger" onClick={this.handleDelete.bind(this)}> Delete </Button>&nbsp;
-                            <Link to="/lecturers"><Button type="default"> Return </Button></Link>
+                            <Link to="/courses"><Button type="default"> Return </Button></Link>
                         </Form.Item>
                     </Form>
                 </Layout.Content>
