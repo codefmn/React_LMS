@@ -15,3 +15,7 @@ export function saveLecturer(data){
 export function updateLecturer(id, data){
     return axios.put(`/lecturer/${id}`, data);
 }
+
+export function deleteLecturerById(id){
+    return axios.delete(`/lecturer/${id}`);
+}

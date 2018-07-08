@@ -15,3 +15,7 @@ export function saveCourse(data){
 export function updateCourse(id, data){
     return axios.put(`/course/${id}`, data);
 }
+
+export function deleteCourseById(id){
+    return axios.delete(`/course/${id}`);
+}
