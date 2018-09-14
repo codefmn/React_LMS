@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
+import Welcome from './Welcome';
 import CoursesView from '../Course/CoursesView';
 import CourseDetailView from '../Course/CourseDetailView';
 import CourseEditView from '../Course/CourseEditView';
@@ -12,7 +13,7 @@ import LecturerEditView from '../Lecturer/LecturerEditView';
 
 export default () => ((
   <div>
-    <Route exact path="/" component={CoursesView}/>
+    <Route exact path="/" component={Welcome}/>
     <Route exact path="/courses" component={CoursesView} />
     <Route exact path="/courses/:id" component={CourseDetailView} />
     <Route exact path="/courses/edit/:id" component={CourseEditView} />
