@@ -1,6 +1,7 @@
 {
   "name": "lms-frontend",
   "version": "0.1.0",
+  "homepage": "https://mfxy.github.io/React_LMS",
   "private": true,
   "dependencies": {
     "antd": "^3.6.1",

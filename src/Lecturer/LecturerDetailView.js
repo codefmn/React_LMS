@@ -12,7 +12,7 @@ export default class LecturerDetailView extends React.Component{
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
         fetchLecturerById(this.props.match.params.id)
             .then(response =>{
                 this.setState({lecturer:response.data});
@@ -21,7 +21,7 @@ export default class LecturerDetailView extends React.Component{
                 alert(e);
             })
     }
-    
+
     render(){
         return(
             <Layout>

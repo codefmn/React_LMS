@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import {
-	BrowserRouter as Router,
-} from 'react-router-dom';
-import {Row, Col, Layout} from 'antd';
+import React from 'react';
+import {Layout} from 'antd';
 import Routes from './App/Routes';
 import TopNav from './App/TopNav';
 
-const {Content} = Layout;
+const {Header, Content} = Layout;
 
 export default function App() {
 	return (
 		<Layout>
 			<TopNav />
 			<Layout  style={{backgroundColor:"#00134d" }}>
+				<Header style={{color:'#fff'}}>
+					Learning Management System
+				</Header>
 				<Content>
 					<Routes />
 				</Content>

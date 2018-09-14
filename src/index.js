@@ -7,7 +7,8 @@ import 'antd/dist/antd.css'
 import './styles';
 import App from './App';
 
-axios.defaults.baseURL = 'http://lmsdemomar.azurewebsites.net/api/';
+// axios.defaults.baseURL = 'https://lmsdemomar.azurewebsites.net/api/';
+axios.defaults.baseURL = 'https://www.easy-mock.com/mock/5b9b8152ba52506b3d994bfe/lms/';
 
 ReactDOM.render(
 	<Router>
